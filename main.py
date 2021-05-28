@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup as BS
 from bs4 import Comment
 import csv
-import lxml
 import os
 from list_of_games import YEAR
 
@@ -12,9 +11,6 @@ HEADERS = {
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
     'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36'
 }
-
-
-
 
 
 def parse_page(html):
@@ -32,7 +28,7 @@ def parse_page(html):
                  'home_OBP': '', 'home_SLG': '', 'home_OPS': '', 'home_str': '', 'home_p_H': '', 'home_p_R': '',
                  'home_p_ER': '', 'home_pBB': '', 'home_p_SO': '', 'home_p_ERA': '', 'home_win': ''}
 
-    with open(f'html_{YEAR}\\{html}', encoding='utf-8',newline='') as file:
+    with open(f'html_{YEAR}\\{html}', encoding='utf-8', newline='') as file:
         read_file = file.read()
         bs = BS(read_file, 'lxml')
         tables = bs.find_all(string=lambda text: isinstance(text, Comment))
@@ -105,7 +101,7 @@ def saving_results(name_of_csv=f'output_{YEAR}.csv'):
     for n, html_file in enumerate(os.listdir(f'html_{YEAR}/')):
         print(f"parse {n} of {len(os.listdir(f'html_{YEAR}/'))}")
         data = parse_page(html_file)
-        with open(f'{name_of_csv}', 'a',encoding='utf-8',newline='') as csvfile:
+        with open(f'{name_of_csv}', 'a', encoding='utf-8', newline='') as csvfile:
             fieldnames = [i for i, x in data.items()]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=';')
             if n == 0:

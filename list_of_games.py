@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup as BS
-import pprint
 import csv
 import lxml
 import os
