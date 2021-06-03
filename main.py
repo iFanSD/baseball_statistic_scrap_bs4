@@ -35,6 +35,7 @@ def parse_page(html):
         teams = bs.find('table', class_='linescore').find_all('a', href=lambda x: "/teams/" in x)
         team_stat['Away_team'] = teams[0].text
         team_stat['Home_team'] = teams[1].text
+        # team_stat['date']= ', '.join(bs.find('div',class_='scorebox_meta').div.get_text().strip().split(', ')[::-1][:2][::-1]).replace('  ', ' ')
         team_stat['date'] = ', '.join(bs.find('h1').text.strip().split(', ')[::-1][:2][::-1]).replace('  ', ' ')
         for table in tables:
             commented_table = BS(table.extract(), 'lxml')
